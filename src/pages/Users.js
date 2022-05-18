@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import UserContext from './UserContext'
 
 function Users() {
+  const userContext = useContext(UserContext)
   let userData = [
     {
       id: 1,
@@ -140,9 +142,6 @@ function Users() {
                   <th>Age</th>
                   <th>Start date</th>
                   <th>Salary</th>
-                  {/* <th>View</th>
-                  <th>Edit</th>
-                  <th>Delete</th> */}
                 </tr>
               </thead>
               <tfoot>
@@ -154,9 +153,6 @@ function Users() {
                   <th>Age</th>
                   <th>Start date</th>
                   <th>Salary</th>
-                  {/* <th>View</th>
-                  <th>Edit</th>
-                  <th>Delete</th> */}
                 </tr>
               </tfoot>
               <tbody>
@@ -171,24 +167,56 @@ function Users() {
                         <td>{age}</td>
                         <td>{date}</td>
                         <td>{salary}</td>
-                        {/* <td>
-                          <Link to={`/users-view${id}`}
-                            className="btn btn-sm btn-primary"
-                          >
-                            View
-                          </Link>
-                        </td>
-                        <td>
-                          <Link
-                            to={`/users-edit${id}`}
-                            className="btn btn-sm btn-warning"
-                          >
-                            Edit
-                          </Link>
-                        </td>
-                        <td>
-                          <button className="btn btn-sm btn-danger">Delete</button>
-                        </td> */}
+                      </tr>
+                    )
+                  },
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div className="card shadow mb-4">
+        <div className="card-header py-3">
+          <h6 className="m-0 font-weight-bold text-primary">
+            User Create Table
+          </h6>
+        </div>
+        <div className="card-body">
+          <div className="table-responsive">
+            <table
+              className="table table-bordered"
+              id="dataTable"
+              width="100%"
+              cellSpacing="0"
+            >
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Office</th>
+                  <th>Age</th>
+                  <th>Start date</th>
+                  <th>Salary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userContext.users.map(
+                  (
+                    { name, position, office, age, startDate, salary },
+                    index,
+                  ) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{name}</td>
+                        <td>{position}</td>
+                        <td>{office}</td>
+                        <td>{age}</td>
+                        <td>{startDate}</td>
+                        <td>{salary}</td>
                       </tr>
                     )
                   },

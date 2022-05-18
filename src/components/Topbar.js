@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import UserContext from '../pages/UserContext'
 
 function Topbar() {
+  let userContext = useContext(UserContext)
   return (
     //    <!-- Topbar -->
     <>
@@ -247,7 +249,7 @@ function Topbar() {
               aria-expanded="false"
             >
               <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                Kavya K
+                {userContext.userName}
               </span>
               <img
                 className="img-profile rounded-circle"

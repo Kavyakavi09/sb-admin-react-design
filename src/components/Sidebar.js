@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import UserContext from '../pages/UserContext'
 
 function Sidebar() {
+  let userContext = useContext(UserContext)
   return (
     // <!-- Sidebar -->
     <ul
@@ -20,7 +22,7 @@ function Sidebar() {
           <i className="fas fa-laugh-wink"></i>
         </div>
         <div className="sidebar-brand-text mx-3">
-          SB Admin <sup>2</sup>
+          SB Admin <sup>2</sup> {userContext.userName}
         </div>
       </a>
 

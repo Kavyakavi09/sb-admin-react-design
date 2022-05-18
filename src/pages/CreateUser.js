@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useFormik } from 'formik'
+import UserContext from './UserContext'
+import { useNavigate } from 'react-router-dom'
 
 function CreateUser() {
+  let userContext = useContext(UserContext)
+  let navigate = useNavigate()
   let formik = useFormik({
     initialValues: {
       name: '',
@@ -40,6 +44,8 @@ function CreateUser() {
     onSubmit: (values) => {
       console.log(values)
       alert('form submitted')
+      userContext.setUsers([...userContext.users, values])
+      navigate('/users', { replace: true })
       // alert(JSON.stringify(values, null, 2));
     },
   })
