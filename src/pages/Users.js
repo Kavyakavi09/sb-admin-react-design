@@ -140,9 +140,9 @@ function Users() {
                   <th>Age</th>
                   <th>Start date</th>
                   <th>Salary</th>
-                  {/* <th>View</th>
+                  <th>View</th>
                   <th>Edit</th>
-                  <th>Delete</th> */}
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tfoot>
@@ -154,9 +154,9 @@ function Users() {
                   <th>Age</th>
                   <th>Start date</th>
                   <th>Salary</th>
-                  {/* <th>View</th>
+                  <th>View</th>
                   <th>Edit</th>
-                  <th>Delete</th> */}
+                  <th>Delete</th>
                 </tr>
               </tfoot>
               <tbody>
@@ -171,7 +171,7 @@ function Users() {
                         <td>{age}</td>
                         <td>{date}</td>
                         <td>{salary}</td>
-                        {/* <td>
+                        <td>
                           <Link to={`/users-view${id}`}
                             className="btn btn-sm btn-primary"
                           >
@@ -188,7 +188,7 @@ function Users() {
                         </td>
                         <td>
                           <button className="btn btn-sm btn-danger">Delete</button>
-                        </td> */}
+                        </td>
                       </tr>
                     )
                   },

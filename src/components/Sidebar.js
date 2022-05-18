@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Sidebar() {
   return (
-    // <!-- Sidebar -->
     <ul
       className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
       id="accordionSidebar"
@@ -81,7 +79,6 @@ function Sidebar() {
         </a>
       </div>
     </ul>
-    //  <!-- End of Sidebar -->
   )
 }
 

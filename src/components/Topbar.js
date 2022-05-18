@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 function Topbar() {
   return (
@@ -322,9 +321,9 @@ function Topbar() {
               >
                 Cancel
               </button>
-              <Link className="btn btn-primary" to={'/'}>
+              <a className="btn btn-primary" href={'/'}>
                 Logout
-              </Link>
+              </a>
             </div>
           </div>
         </div>
