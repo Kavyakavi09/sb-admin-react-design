@@ -46,11 +46,11 @@ function ProjectCard() {
           }) => {
             return (
               <>
-                <h4 className="small font-weight-bold" key={name}>
+                <h4 className="small font-weight-bold">
                   {name}
                   <span className="float-right">{percentage}</span>
                 </h4>
-                <div className="progress mb-4" key={percentage}>
+                <div className="progress mb-4" key={name}>
                   {width20 && (
                     <div
                       className="progress-bar bg-danger"

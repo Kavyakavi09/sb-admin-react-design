@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-function CreateUser() {
+function CreateProfile() {
   const [user, setUser] = useState([])
   let navigate = useNavigate()
   let formik = useFormik({
@@ -48,7 +48,7 @@ function CreateUser() {
           values,
         )
         setUser([...user, values])
-        navigate('/users', { replace: true })
+        navigate('/profile', { replace: true })
       } catch (error) {
         console.log(error.message)
       }
@@ -230,4 +230,4 @@ function CreateUser() {
   )
 }
 
-export default CreateUser
+export default CreateProfile

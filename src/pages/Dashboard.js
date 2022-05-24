@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import DashboardCard from '../components/DashboardCard'
 import LineChart from '../components/LineChart'
@@ -8,8 +8,10 @@ import PieChart from '../components/PieChart'
 import ProjectCard from '../components/ProjectCard'
 import ColorSystem from '../components/ColorSystem'
 import Illustration from '../components/Illustration'
+import UserContext from './UserContext'
 
 function Dashboard() {
+  let userContext = useContext(UserContext)
   let cardBanner = [
     {
       title: 'Earnings (Monthly)',
@@ -45,7 +47,7 @@ function Dashboard() {
   return (
     <>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
+        <h1 className="h3 mb-0 text-gray-800">Hello, {userContext.userName}</h1>
         <Link
           to="/report"
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"

@@ -1,9 +1,12 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import UserContext from '../pages/UserContext'
 
 function Sidebar() {
+  let ChangeName = useContext(UserContext)
   return (
     <ul
       className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
@@ -18,7 +21,7 @@ function Sidebar() {
           <i className="fas fa-laugh-wink"></i>
         </div>
         <div className="sidebar-brand-text mx-3">
-          SB Admin <sup>2</sup>
+          SB Admin <sup>2</sup> {ChangeName.userName}
         </div>
       </a>
 
@@ -49,9 +52,9 @@ function Sidebar() {
 
       {/* <!-- Nav Item - products --> */}
       <li className="nav-item">
-        <Link className="nav-link" to={'/products'}>
+        <Link className="nav-link" to={'/profile'}>
           <i className="fas fa-fw fa-table"></i>
-          <span>Products</span>
+          <span>Profile</span>
         </Link>
       </li>
 

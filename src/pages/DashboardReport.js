@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const DashboardReport = () => {
   const [report, setReport] = useState(false)
@@ -27,6 +28,13 @@ const DashboardReport = () => {
         <button onClick={reortGenerate} className="btn btn-primary m-5">
           Click to Generate report
         </button>
+      )}
+      {report ? (
+        <Link to="/" className="btn btn-primary m-5" onClick={reortGenerate}>
+          Back to Dashboard
+        </Link>
+      ) : (
+        ''
       )}
     </div>
   )

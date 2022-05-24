@@ -1,13 +1,10 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-target-blank */
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
 
-function Users() {
+const Profile = () => {
   const [user, setUser] = useState([])
 
   async function fetchData() {
@@ -43,16 +40,15 @@ function Users() {
       }
     })
   }
-
   return (
     <>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-2 text-gray-800">User List</h1>
+        <h1 className="h3 mb-2 text-gray-800">Profile List</h1>
         <Link
-          to={'/users-create'}
+          to={'/profile-create'}
           className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
         >
-          <i className="fas fa-user fa-sm text-white-50"></i> Create User
+          <i className="fas fa-fw fa-table"></i> Create Profile
         </Link>
       </div>
       <p className="mb-4">
@@ -120,7 +116,7 @@ function Users() {
                         <td>${salary}</td>
                         <td>
                           <Link
-                            to={`/users-view${id}`}
+                            to={`/profile-view${id}`}
                             className="btn btn-sm btn-primary"
                           >
                             View
@@ -128,7 +124,7 @@ function Users() {
                         </td>
                         <td>
                           <Link
-                            to={`/users-edit${id}`}
+                            to={`/profile-edit${id}`}
                             className="btn btn-sm btn-warning"
                           >
                             Edit
@@ -157,4 +153,4 @@ function Users() {
   )
 }
 
-export default Users
+export default Profile

@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-function CreateUser() {
-  const [user, setUser] = useState([])
+function ProfileEdit() {
+  let { id } = useParams()
   let navigate = useNavigate()
   let formik = useFormik({
     initialValues: {
@@ -42,26 +43,31 @@ function CreateUser() {
       return errors
     },
     onSubmit: async (values) => {
+      await axios.put(
+        `https://6251823cdfa31c1fbd6ee6d2.mockapi.io/users/${id}`,
+        values,
+      )
+      navigate('/users', { replace: true })
+    },
+  })
+  useEffect(() => {
+    async function fetchData() {
       try {
-        await axios.post(
-          'https://6251823cdfa31c1fbd6ee6d2.mockapi.io/users',
-          values,
+        let user = await axios.get(
+          `https://6251823cdfa31c1fbd6ee6d2.mockapi.io/users/${id}`,
         )
-        setUser([...user, values])
-        navigate('/users', { replace: true })
+        formik.setValues(user.data)
       } catch (error) {
         console.log(error.message)
       }
-    },
-  })
-
+    }
+    fetchData()
+  }, [])
   return (
     <div className="container py-3">
       <div className="card shadow">
         <div className="card-header py-3">
-          <h3 className="m-0 font-weight-bold text-primary">
-            User Create Form
-          </h3>
+          <h3 className="m-0 font-weight-bold text-primary">User Edit Form</h3>
         </div>
         <div className="card-body">
           <form onSubmit={formik.handleSubmit}>
@@ -230,4 +236,4 @@ function CreateUser() {
   )
 }
 
-export default CreateUser
+export default ProfileEdit

@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-function UserView() {
+function ProfileView() {
   const [user, setUser] = useState([])
   const { id } = useParams()
   useEffect(() => {
@@ -49,7 +49,7 @@ function UserView() {
         </table>
       </div>
       <div className="text-center m-5">
-        <Link to="/users" className="btn btn-primary">
+        <Link to="/profile" className="btn btn-primary">
           Back to Users
         </Link>
       </div>
@@ -57,4 +57,4 @@ function UserView() {
   )
 }
 
-export default UserView
+export default ProfileView
