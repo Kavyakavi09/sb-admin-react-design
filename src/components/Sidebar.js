@@ -44,18 +44,18 @@ function Sidebar() {
       <div className="sidebar-heading">Interface</div>
 
       {/* <!-- Nav Item - Users --> */}
-      <li className="nav-item">
+      {/* <li className="nav-item">
         <Link className="nav-link" to={'/users'}>
           <i className="fas fa-fw fa-user"></i>
           <span>Users</span>
         </Link>
-      </li>
+      </li> */}
 
       {/* <!-- Nav Item - products --> */}
       <li className="nav-item">
         <Link className="nav-link" to={'/products'}>
-          <i className="fas fa-fw fa-table"></i>
-          <span>Products</span>
+          <i className="fas fa-fw fa-cat"></i>
+          <span>Cats</span>
         </Link>
       </li>
 

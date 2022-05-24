@@ -1,19 +1,46 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react'
-// import { Link } from "react-router-dom";
-import productItems from '../components/ProductsItem'
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import UserContext from './UserContext'
+import swal from 'sweetalert'
 
 const Product = () => {
+  let productContext = useContext(UserContext)
+  console.log(productContext)
+
+  function handleDelete(i) {
+    // let delItem = productContext.product.filter((obj) => obj.id !== id)
+    // productContext.setProduct(delItem)
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this data!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        let delItem = [...productContext.product]
+        delItem.splice(i, 1)
+        productContext.setProduct(delItem)
+        swal('Poof! Your data has been deleted!', {
+          icon: 'success',
+        })
+      } else {
+        swal('Your data is safe!')
+      }
+    })
+  }
+
   return (
     <>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-2 text-gray-800">Products List</h1>
-        {/* <Link
-          to={'/users-create'}
+        <h1 className="h3 mb-2 text-gray-800">Cats List</h1>
+        <Link
+          to={'/product-create'}
           className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
         >
-          <i className="fas fa-fw fa-table"></i> Create Product
-        </Link> */}
+          <i className="fas fa-fw fa-table"></i> Create Cat
+        </Link>
       </div>
       <p className="mb-4">
         DataTables is a third party plugin that is used to generate the demo
@@ -33,7 +60,7 @@ const Product = () => {
         <div className="card-body">
           <div className="table-responsive">
             <table
-              className="table table-bordered"
+              className="table table-strepped table-hover"
               id="dataTable"
               width="100%"
               cellSpacing="0"
@@ -41,59 +68,43 @@ const Product = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>TITLE</th>
-                  <th>CATEGORY</th>
-                  <th>DESCRIPTION</th>
-                  <th>PRICE</th>
-                  <th>RATING</th>
-                  <th>IMAGE</th>
-                  {/* <th>View</th>
+                  <th>Owner Name</th>
+                  <th>Email</th>
+                  <th>Cat Name</th>
+                  <th>Origin</th>
+                  <th>Price</th>
+                  <th>View</th>
                   <th>Edit</th>
-                  <th>Delete</th> */}
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
                   <th>S.No</th>
-                  <th>TITLE</th>
-                  <th>CATEGORY</th>
-                  <th>DESCRIPTION</th>
-                  <th>PRICE</th>
-                  <th>RATING</th>
-                  <th>IMAGE</th>
-                  {/* <th>View</th>
+                  <th>Owner Name</th>
+                  <th>Email</th>
+                  <th>Cat Name</th>
+                  <th>Origin</th>
+                  <th>Price</th>
+                  <th>View</th>
                   <th>Edit</th>
-                  <th>Delete</th> */}
+                  <th>Delete</th>
                 </tr>
               </tfoot>
               <tbody>
-                {productItems.map(
-                  ({
-                    id,
-                    title,
-                    price,
-                    description,
-                    category,
-                    rating: { rate },
-                    image,
-                  }) => {
+                {productContext.product.map(
+                  ({ id, name, price, owner, origin, email }, i) => {
                     return (
                       <tr key={id}>
                         <td>{id}</td>
-                        <td>{title}</td>
-                        <td>{category}</td>
-                        <td>{description}</td>
+                        <td>{owner}</td>
+                        <td>{email}</td>
+                        <td>{name}</td>
+                        <td>{origin}</td>
                         <td>${price}</td>
-                        <td>{rate}</td>
                         <td>
-                          <img
-                            src={image}
-                            alt="ProductImage"
-                            className="product-image"
-                          />
-                        </td>
-                        {/* <td>
-                          <Link to={`/users-view${id}`}
+                          <Link
+                            to={`/product-view${id}`}
                             className="btn btn-sm btn-primary"
                           >
                             View
@@ -101,15 +112,22 @@ const Product = () => {
                         </td>
                         <td>
                           <Link
-                            to={`/users-edit${id}`}
+                            to={`/product-edit${id}`}
                             className="btn btn-sm btn-warning"
                           >
                             Edit
                           </Link>
                         </td>
                         <td>
-                          <button className="btn btn-sm btn-danger">Delete</button>
-                        </td> */}
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={() => {
+                              handleDelete(i)
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </tr>
                     )
                   },

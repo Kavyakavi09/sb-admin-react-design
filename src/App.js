@@ -2,24 +2,27 @@ import './App.css'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
 import Dashboard from './pages/Dashboard'
-import Users from './pages/Users'
-import CreateUser from './pages/CreateUser'
-import UserView from './pages/UserView'
-import UserEdit from './pages/UserEdit'
 import Error from './pages/Error'
 import Product from './pages/Product'
 import DashboardReport from './pages/DashboardReport'
 import { UserProvider } from './pages/UserContext'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
+import productItems from './components/ProductsItem'
+import CreateProduct from './pages/CreateProduct'
+import ViewProduct from './pages/ViewProduct'
+import EditProduct from './pages/EditProduct'
 
 function App() {
   const userName = 'Kavya K'
   const [users, setUsers] = useState([])
+  const [product, setProduct] = useState(productItems)
   return (
     <BrowserRouter>
       <div id="wrapper">
-        <UserProvider value={{ userName, users, setUsers }}>
+        <UserProvider
+          value={{ userName, users, setUsers, product, setProduct }}
+        >
           <Sidebar />
           <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
@@ -27,10 +30,9 @@ function App() {
               <div className="container-fluid">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
-                  <Route path="/users" element={<Users />} />
-                  <Route path="/users-create" element={<CreateUser />} />
-                  <Route path="/users-view:id" element={<UserView />} />
-                  <Route path="/users-edit:id" element={<UserEdit />} />
+                  <Route path="/product-create" element={<CreateProduct />} />
+                  <Route path="/product-view:id" element={<ViewProduct />} />
+                  <Route path="/product-edit:id" element={<EditProduct />} />
                   <Route path="/products" element={<Product />} />
                   <Route path="/report" element={<DashboardReport />} />
                   <Route path="*" element={<Error />} />
