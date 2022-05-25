@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import UserContext from './UserContext'
+import swal from 'sweetalert'
 
 function Login() {
   let userContext = useContext(UserContext)
@@ -29,7 +30,12 @@ function Login() {
     }),
     onSubmit: async (values) => {
       userContext.setUser(values.name)
-      alert('You have sucessfully logged in')
+      swal({
+        title: 'Welcome!',
+        text: 'You have successfully Logged in!',
+        icon: 'success',
+        button: 'Aww yiss!',
+      })
       navigate('/dashboard')
     },
   })
