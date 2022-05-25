@@ -9,7 +9,7 @@ function ProfileView() {
   useEffect(() => {
     async function fetchData() {
       let user = await axios.get(
-        `https://6251823cdfa31c1fbd6ee6d2.mockapi.io/users/${id}`,
+        `https://6251823cdfa31c1fbd6ee6d2.mockapi.io/Products/${id}`,
       )
       setUser(user.data)
     }
@@ -27,30 +27,30 @@ function ProfileView() {
           <thead>
             <tr>
               <th>S.No</th>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+              <th>Owner</th>
+              <th>Email</th>
+              <th>Cat Name</th>
+              <th>Origin</th>
+              <th>Price</th>
+              <th>Rating</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{user.id}</td>
+              <td>{id}</td>
+              <td>{user.owner}</td>
+              <td>{user.email}</td>
               <td>{user.name}</td>
-              <td>{user.position}</td>
-              <td>{user.office}</td>
-              <td>{user.age}</td>
-              <td>{user.startDate}</td>
-              <td>${user.salary}</td>
+              <td>{user.origin}</td>
+              <td>${user.price}</td>
+              <td>{user.rating}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div className="text-center m-5">
-        <Link to="/profile" className="btn btn-primary">
-          Back to Users
+        <Link to="/profile" className="btn btn-warning">
+          Go back
         </Link>
       </div>
     </div>

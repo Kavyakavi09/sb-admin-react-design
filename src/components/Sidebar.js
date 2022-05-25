@@ -53,8 +53,8 @@ function Sidebar() {
       {/* <!-- Nav Item - products --> */}
       <li className="nav-item">
         <Link className="nav-link" to={'/profile'}>
-          <i className="fas fa-fw fa-table"></i>
-          <span>Profile</span>
+          <i className="fas fa-fw fa-cat"></i>
+          <span>Cats</span>
         </Link>
       </li>
 

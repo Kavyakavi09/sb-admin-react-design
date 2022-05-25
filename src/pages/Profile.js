@@ -8,17 +8,21 @@ const Profile = () => {
   const [user, setUser] = useState([])
 
   async function fetchData() {
-    let user = await axios.get(
-      'https://6251823cdfa31c1fbd6ee6d2.mockapi.io/users',
-    )
-    setUser(user.data)
+    try {
+      let user = await axios.get(
+        'https://6251823cdfa31c1fbd6ee6d2.mockapi.io/Products',
+      )
+      setUser(user.data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
     fetchData()
   }, [])
 
-  async function deleteData(id) {
+  function deleteData(id) {
     swal({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this data!',
@@ -28,7 +32,7 @@ const Profile = () => {
     }).then(async (willDelete) => {
       if (willDelete) {
         await axios.delete(
-          `https://6251823cdfa31c1fbd6ee6d2.mockapi.io/users/${id}`,
+          `https://6251823cdfa31c1fbd6ee6d2.mockapi.io/Products/${id}`,
         )
 
         fetchData()
@@ -43,12 +47,12 @@ const Profile = () => {
   return (
     <>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-2 text-gray-800">Profile List</h1>
+        <h1 className="h3 mb-2 text-gray-800">Cats List</h1>
         <Link
           to={'/profile-create'}
           className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
         >
-          <i className="fas fa-fw fa-table"></i> Create Profile
+          <i className="fas fa-fw fa-cat"></i> Create Cat
         </Link>
       </div>
       <p className="mb-4">
@@ -69,7 +73,7 @@ const Profile = () => {
         <div className="card-body">
           <div className="table-responsive">
             <table
-              className="table table-bordered"
+              className="table table-bordered table-hover"
               id="dataTable"
               width="100%"
               cellSpacing="0"
@@ -77,12 +81,12 @@ const Profile = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
+                  <th>Owner</th>
+                  <th>Email</th>
+                  <th>Cat Name</th>
+                  <th>Origin</th>
+                  <th>Price</th>
+                  <th>Rating</th>
                   <th>View</th>
                   <th>Edit</th>
                   <th>Delete</th>
@@ -91,12 +95,12 @@ const Profile = () => {
               <tfoot>
                 <tr>
                   <th>S.No</th>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
+                  <th>Owner</th>
+                  <th>Email</th>
+                  <th>Cat Name</th>
+                  <th>Origin</th>
+                  <th>Price</th>
+                  <th>Rating</th>
                   <th>View</th>
                   <th>Edit</th>
                   <th>Delete</th>
@@ -104,16 +108,25 @@ const Profile = () => {
               </tfoot>
               <tbody>
                 {user.map(
-                  ({ id, name, position, office, age, startDate, salary }) => {
+                  ({
+                    id,
+                    name,
+                    origin,
+                    owner,
+                    price,
+                    email,
+                    image,
+                    rating,
+                  }) => {
                     return (
                       <tr key={id}>
                         <td>{id}</td>
+                        <td>{owner}</td>
+                        <td>{email}</td>
                         <td>{name}</td>
-                        <td>{position}</td>
-                        <td>{office}</td>
-                        <td>{age}</td>
-                        <td>{startDate}</td>
-                        <td>${salary}</td>
+                        <td>{origin}</td>
+                        <td>${price}</td>
+                        <td>{rating}</td>
                         <td>
                           <Link
                             to={`/profile-view${id}`}

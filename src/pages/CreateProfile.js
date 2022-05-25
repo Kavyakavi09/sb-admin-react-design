@@ -1,53 +1,42 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import * as yup from 'yup'
 
 function CreateProfile() {
-  const [user, setUser] = useState([])
   let navigate = useNavigate()
   let formik = useFormik({
     initialValues: {
+      owner: '',
+      email: '',
       name: '',
-      position: '',
-      office: '',
-      age: 0,
-      startDate: '',
-      salary: 0,
+      origin: '',
+      price: '',
+      rating: '',
     },
-    validate: (values) => {
-      const errors = {}
-      if (!values.name) {
-        errors.name = 'Please Enter your Name'
-      }
-
-      if (!values.position) {
-        errors.position = 'Please Enter your position'
-      }
-
-      if (!values.office) {
-        errors.office = 'Please Enter the name of your office'
-      }
-
-      if (!values.age || values.age < 18) {
-        errors.age = 'Age is required and should be greater than 18'
-      }
-
-      if (!values.startDate) {
-        errors.startDate = 'Please Enter valid date'
-      }
-      if (!values.salary || values.salary < 10000) {
-        errors.salary = 'Salary should be greater than 10,000'
-      }
-      return errors
-    },
+    validationSchema: yup.object({
+      owner: yup
+        .string()
+        .max(25, 'Must be 25 characters or less')
+        .required('* Required'),
+      email: yup.string().required('* Required').email('Enter a vaild Email'),
+      name: yup.string().required('* Required'),
+      origin: yup.string().required('* Required'),
+      price: yup.number('Enter only numeric values').required('* Required'),
+      rating: yup
+        .number('Enter only numeric values')
+        .required('* Required')
+        .min(1, 'Rating can not be less than 1')
+        .max(5, 'Rating can not be higher than 5'),
+    }),
     onSubmit: async (values) => {
       try {
         await axios.post(
-          'https://6251823cdfa31c1fbd6ee6d2.mockapi.io/users',
+          'https://6251823cdfa31c1fbd6ee6d2.mockapi.io/Products',
           values,
         )
-        setUser([...user, values])
+
         navigate('/profile', { replace: true })
       } catch (error) {
         console.log(error.message)
@@ -59,22 +48,80 @@ function CreateProfile() {
     <div className="container py-3">
       <div className="card shadow">
         <div className="card-header py-3">
-          <h3 className="m-0 font-weight-bold text-primary">
-            User Create Form
-          </h3>
+          <h3 className="m-0 font-weight-bold text-primary">Cat Create Form</h3>
         </div>
         <div className="card-body">
           <form onSubmit={formik.handleSubmit}>
             <div className="row">
               <div className="col-lg-6">
+                <label htmlFor="owner">
+                  Owner Name <span className="text-danger">*</span>
+                </label>
+                <input
+                  type={'text'}
+                  id="owner"
+                  name="owner"
+                  onBlur={formik.handleBlur}
+                  placeholder="Enter the name of owner"
+                  onChange={formik.handleChange}
+                  value={formik.values.owner}
+                  className="form-control"
+                  style={{
+                    border: formik.errors.owner
+                      ? '1px solid red'
+                      : formik.values.owner.length <= 25 &&
+                        formik.values.owner.length !== 0
+                      ? '1px solid green'
+                      : '',
+                  }}
+                />
+                {formik.touched.owner && formik.errors.owner ? (
+                  <small style={{ color: 'red' }}>{formik.errors.owner}</small>
+                ) : null}
+                {formik.values.owner.length <= 25 &&
+                formik.values.owner.length !== 0 ? (
+                  <small style={{ color: 'green' }}>Looks good!</small>
+                ) : null}
+              </div>
+              <div className="col-lg-6">
+                <label htmlFor="email">
+                  Email <span className="text-danger">*</span>
+                </label>
+                <input
+                  type={'email'}
+                  name="email"
+                  onChange={formik.handleChange}
+                  placeholder="Enter your Email"
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  className="form-control"
+                  style={{
+                    border: formik.errors.email
+                      ? '1px solid red'
+                      : formik.values.email !== '' && !formik.errors.email
+                      ? '1px solid green'
+                      : '',
+                  }}
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <small style={{ color: 'red' }}>{formik.errors.email}</small>
+                ) : null}
+
+                {formik.values.email !== '' && !formik.errors.email ? (
+                  <small style={{ color: 'green' }}>Looks good!</small>
+                ) : null}
+              </div>
+              <div className="col-lg-6">
                 <label htmlFor="name">
-                  Name <span className="text-danger">*</span>
+                  Cat Name <span className="text-danger">*</span>
                 </label>
                 <input
                   type={'text'}
                   name="name"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.name}
+                  placeholder="Enter your cat Name"
                   className="form-control"
                   style={{
                     border: formik.errors.name
@@ -84,126 +131,97 @@ function CreateProfile() {
                       : '',
                   }}
                 />
-                <small style={{ color: 'red' }}>{formik.errors.name}</small>
+                {formik.touched.name && formik.errors.name ? (
+                  <small style={{ color: 'red' }}>{formik.errors.name}</small>
+                ) : null}
+
                 {formik.values.name ? (
                   <small style={{ color: 'green' }}>Looks good!</small>
                 ) : null}
               </div>
               <div className="col-lg-6">
-                <label htmlFor="position">
-                  Position <span className="text-danger">*</span>
+                <label htmlFor="origin">
+                  Origin <span className="text-danger">*</span>
                 </label>
                 <input
                   type={'text'}
-                  name="position"
+                  name="origin"
                   onChange={formik.handleChange}
-                  value={formik.values.position}
+                  onBlur={formik.handleBlur}
+                  placeholder="Enter the origin"
+                  value={formik.values.origin}
                   className="form-control"
                   style={{
-                    border: formik.errors.position
+                    border: formik.errors.origin
                       ? '1px solid red'
-                      : formik.values.position !== ''
+                      : formik.values.origin !== ''
                       ? '1px solid green'
                       : '',
                   }}
                 />
-                <small style={{ color: 'red' }}>{formik.errors.position}</small>
-                {formik.values.position ? (
+                {formik.touched.origin && formik.errors.origin ? (
+                  <small style={{ color: 'red' }}>{formik.errors.origin}</small>
+                ) : null}
+
+                {formik.values.origin !== '' ? (
                   <small style={{ color: 'green' }}>Looks good!</small>
                 ) : null}
               </div>
               <div className="col-lg-6">
-                <label htmlFor="office">
-                  Office <span className="text-danger">*</span>
-                </label>
-                <input
-                  type={'text'}
-                  name="office"
-                  onChange={formik.handleChange}
-                  value={formik.values.office}
-                  className="form-control"
-                  style={{
-                    border: formik.errors.office
-                      ? '1px solid red'
-                      : formik.values.office !== ''
-                      ? '1px solid green'
-                      : '',
-                  }}
-                />
-                <small style={{ color: 'red' }}>{formik.errors.office}</small>
-                {formik.values.office ? (
-                  <small style={{ color: 'green' }}>Looks good!</small>
-                ) : null}
-              </div>
-              <div className="col-lg-6">
-                <label htmlFor="age">
-                  Age <span className="text-danger">*</span>
+                <label htmlFor="price">
+                  Price <span className="text-danger">*</span>
                 </label>
                 <input
                   type={'number'}
-                  name="age"
+                  name="price"
+                  placeholder="Enter the price"
                   onChange={formik.handleChange}
-                  value={formik.values.age}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.price}
                   className="form-control"
                   style={{
-                    border: formik.errors.age
+                    border: formik.errors.price
                       ? '1px solid red'
-                      : formik.values.age >= 18
+                      : formik.values.price !== ''
                       ? '1px solid green'
                       : '',
                   }}
-                  min={'0'}
+                  min={'1'}
                 />
-                <small style={{ color: 'red' }}>{formik.errors.age}</small>
-                {formik.values.age >= 18 ? (
+                {formik.touched.price && formik.errors.price ? (
+                  <small style={{ color: 'red' }}>{formik.errors.price}</small>
+                ) : null}
+
+                {formik.values.price ? (
                   <small style={{ color: 'green' }}>Looks good!</small>
                 ) : null}
               </div>
               <div className="col-lg-6">
-                <label htmlFor="date">
-                  Start Date <span className="text-danger">*</span>
-                </label>
-                <input
-                  type={'date'}
-                  name="startDate"
-                  onChange={formik.handleChange}
-                  value={formik.values.startDate}
-                  className="form-control"
-                  style={{
-                    border: formik.errors.startDate
-                      ? '1px solid red'
-                      : formik.values.startDate !== ''
-                      ? '1px solid green'
-                      : '',
-                  }}
-                />
-                <small style={{ color: 'red' }}>
-                  {formik.errors.startDate}
-                </small>
-                {formik.values.startDate ? (
-                  <small style={{ color: 'green' }}>Looks good!</small>
-                ) : null}
-              </div>
-              <div className="col-lg-6">
-                <label htmlFor="salary">
-                  Salary <span className="text-danger">*</span>
+                <label htmlFor="rating">
+                  Rating <span className="text-danger">*</span>
                 </label>
                 <input
                   type={'number'}
-                  name="salary"
+                  name="rating"
                   onChange={formik.handleChange}
-                  value={formik.values.salary}
+                  onBlur={formik.handleBlur}
+                  placeholder="Enter the rating"
+                  value={formik.values.rating}
                   className="form-control"
                   style={{
-                    border: formik.errors.salary
+                    border: formik.errors.rating
                       ? '1px solid red'
-                      : formik.values.salary >= 10000
+                      : !formik.errors.rating && formik.values.rating !== ''
                       ? '1px solid green'
                       : '',
                   }}
+                  min={'1'}
                 />
-                <small style={{ color: 'red' }}>{formik.errors.salary}</small>
-                {formik.values.salary >= 10000 ? (
+                {formik.touched.rating && formik.errors.rating ? (
+                  <small style={{ color: 'red' }}>{formik.errors.rating}</small>
+                ) : null}
+
+                {!formik.errors.rating && formik.values.rating !== '' ? (
                   <small style={{ color: 'green' }}>Looks good!</small>
                 ) : null}
               </div>

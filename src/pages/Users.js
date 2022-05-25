@@ -73,7 +73,7 @@ function Users() {
         <div className="card-body">
           <div className="table-responsive">
             <table
-              className="table table-bordered"
+              className="table table-bordered table-hover"
               id="dataTable"
               width="100%"
               cellSpacing="0"
