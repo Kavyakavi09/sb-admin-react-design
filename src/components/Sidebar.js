@@ -30,7 +30,7 @@ function Sidebar() {
 
       {/* <!-- Nav Item - Dashboard --> */}
       <li className="nav-item">
-        <Link className="nav-link" to={'/'}>
+        <Link className="nav-link" to={'/dashboard'}>
           <i className="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </Link>

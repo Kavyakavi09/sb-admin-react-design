@@ -30,7 +30,11 @@ const DashboardReport = () => {
         </button>
       )}
       {report ? (
-        <Link to="/" className="btn btn-primary m-5" onClick={reortGenerate}>
+        <Link
+          to="/dashboard"
+          className="btn btn-primary m-5"
+          onClick={reortGenerate}
+        >
           Back to Dashboard
         </Link>
       ) : (
