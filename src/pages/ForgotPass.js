@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import UserContext from './UserContext';
+import axios from 'axios';
+import { useState } from 'react';
 
 function ForgotPass() {
-  let userContext = useContext(UserContext);
-  let navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState('');
+  const [succMsg, setSuccMs] = useState('');
   let formik = useFormik({
     initialValues: {
       email: '',
@@ -18,12 +19,34 @@ function ForgotPass() {
         .email('Enter a vaild Email'),
     }),
     onSubmit: async (values) => {
-      userContext.setUser(values.name);
-      navigate('/reset-password');
+      try {
+        let resetData = await axios.post(
+          'https://password-reset-project.herokuapp.com/api/users/forget-password',
+          values
+        );
+        setSuccMs(resetData.data.message);
+      } catch (error) {
+        setErrorMsg(error.response.data.message);
+        console.log(error);
+      }
     },
   });
   return (
     <div>
+      {errorMsg ? (
+        <div className='alert alert-danger text-center mt-5' role='alert'>
+          {errorMsg}
+        </div>
+      ) : (
+        ''
+      )}
+      {succMsg ? (
+        <div className='alert alert-success text-center mt-5' role='alert'>
+          {succMsg}
+        </div>
+      ) : (
+        ''
+      )}
       <div className='container'>
         <div className='row'>
           <div className='col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto'>

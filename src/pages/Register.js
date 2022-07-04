@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import UserContext from './UserContext';
+import axios from 'axios';
 
 function Register() {
   let userContext = useContext(UserContext);
@@ -29,7 +30,17 @@ function Register() {
         .required('*Password is required'),
     }),
     onSubmit: async (values) => {
-      userContext.setUser(values.name);
+      try {
+        await axios.post(
+          'https://password-reset-project.herokuapp.com/api/users/signup',
+          values
+        );
+        userContext.setUser(values.name);
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+        alert('Something went wrong');
+      }
     },
   });
   return (

@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import UserContext from './UserContext';
+import axios from 'axios';
+import swal from 'sweetalert';
 
 function Reset() {
-  let userContext = useContext(UserContext);
+  const { token } = useParams();
+  const [errorMsg, setErrorMsg] = useState('');
+  const [succMsg, setSuccMs] = useState('');
   let navigate = useNavigate();
   let formik = useFormik({
     initialValues: {
@@ -29,13 +32,40 @@ function Reset() {
         .required('Confirm Password Required'),
     }),
     onSubmit: async (values) => {
-      userContext.setUser(values.name);
-
-      navigate('/');
+      try {
+        let resetData = await axios.post(
+          `https://password-reset-project.herokuapp.com/api/users/reset-password/${token}`,
+          values
+        );
+        setSuccMs(resetData.data.message);
+        swal({
+          title: 'Nice!',
+          text: 'Your password reset successfully!',
+          icon: 'success',
+        });
+        navigate('/');
+      } catch (error) {
+        setErrorMsg(error.response.data.message);
+        console.log(error);
+      }
     },
   });
   return (
     <div>
+      {errorMsg ? (
+        <div className='alert alert-danger text-center mt-5' role='alert'>
+          {errorMsg}
+        </div>
+      ) : (
+        ''
+      )}
+      {succMsg ? (
+        <div className='alert alert-success text-center mt-5' role='alert'>
+          {succMsg}
+        </div>
+      ) : (
+        ''
+      )}
       <div className='container'>
         <div className='row'>
           <div className='col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto'>
