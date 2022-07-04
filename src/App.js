@@ -12,7 +12,7 @@ import ProfileView from './pages/ProfileView';
 import ProfileEdit from './pages/ProfileEdit';
 import Register from './pages/Register';
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import { UserProvider } from './pages/UserContext';
 import { useState } from 'react';
 import Login from './pages/Login';
@@ -25,7 +25,7 @@ function App() {
 
   const [user, setUser] = useState([]);
   return (
-    <BrowserRouter>
+    <HashRouter>
       <UserProvider value={{ userName, user, setUser }}>
         <Routes>
           <Route path='/' element={<Login />} />
@@ -47,7 +47,7 @@ function App() {
           </Route>
         </Routes>
       </UserProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
