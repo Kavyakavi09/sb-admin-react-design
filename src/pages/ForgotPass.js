@@ -3,35 +3,23 @@ import { useNavigate, Link } from 'react-router-dom';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import UserContext from './UserContext';
-import swal from 'sweetalert';
 
-function Login() {
+function ForgotPass() {
   let userContext = useContext(UserContext);
   let navigate = useNavigate();
   let formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
     },
     validationSchema: yup.object({
       email: yup
         .string('Enter your email')
         .required('* Required')
         .email('Enter a vaild Email'),
-      password: yup
-        .string('Enter your password')
-        .min(8, 'Password should be of minimum 8 characters length')
-        .required('*Password is required'),
     }),
     onSubmit: async (values) => {
       userContext.setUser(values.name);
-      swal({
-        title: 'Welcome!',
-        text: 'You have successfully Logged in!',
-        icon: 'success',
-        button: 'Aww yiss!',
-      });
-      navigate('/dashboard');
+      navigate('/reset-password');
     },
   });
   return (
@@ -42,7 +30,7 @@ function Login() {
             <div className='card border-0 shadow rounded-5 my-5'>
               <div className='card-body p-4 p-sm-5'>
                 <h5 className='card-title text-center mb-3 fw-light fs-5'>
-                  Sign In
+                  Forgot Password?
                 </h5>
                 <form onSubmit={formik.handleSubmit}>
                   <div className='form-floating mb-3'>
@@ -74,63 +62,16 @@ function Login() {
                       <small style={{ color: 'green' }}>Looks good!</small>
                     ) : null}
                   </div>
-                  <div className='form-floating mb-3'>
-                    <input
-                      type='password'
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                      name='password'
-                      className='form-control'
-                      id='floatingPassword'
-                      placeholder='Password'
-                      style={{
-                        border: formik.errors.password
-                          ? '1px solid red'
-                          : formik.values.password !== '' &&
-                            !formik.errors.password
-                          ? '1px solid green'
-                          : '',
-                      }}
-                    />
-                    <label htmlFor='floatingPassword'>Password</label>
-                    {formik.touched.password && formik.errors.password ? (
-                      <small style={{ color: 'red' }}>
-                        {formik.errors.password}
-                      </small>
-                    ) : null}
-                    {formik.values.password.length >= 8 &&
-                    formik.values.password.length !== 0 ? (
-                      <small style={{ color: 'green' }}>Looks good!</small>
-                    ) : null}
-                  </div>
-
-                  <div className='form-check mb-3'>
-                    <input
-                      className='form-check-input'
-                      type='checkbox'
-                      value=''
-                      id='rememberPasswordCheck'
-                    />
-                    <label
-                      className='form-check-label'
-                      htmlFor='rememberPasswordCheck'>
-                      Remember password
-                    </label>
-                  </div>
                   <div className='d-grid'>
                     <button
                       className='btn btn-primary btn-login text-uppercase fw-bold'
                       type='submit'>
-                      Sign in
+                      Send Recovery Email
                     </button>
                   </div>
-                  <div className='mt-3'>
-                    <Link to={'/forgot-password'}>Forgot Password?</Link>
-                  </div>
-                  <div className='mt-2'>
-                    Don't have an account? <Link to={'/register'}>Sign up</Link>{' '}
-                  </div>
+                  <Link to={'/'} className='d-block text-center mt-3'>
+                    Have an account? Sign In
+                  </Link>
                 </form>
               </div>
             </div>
@@ -141,4 +82,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPass;
