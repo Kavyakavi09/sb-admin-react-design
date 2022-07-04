@@ -3,5 +3,5 @@ In this project i have handled password reset flow.
 
 ###[Live site](https://password-reset-project.netlify.app/)
 
-![MERN Application](https://ibb.co/gMqgYwk)
+<a href="https://ibb.co/gMqgYwk"><img src="https://i.ibb.co/GvYPmkz/password-reset.png" alt="password-reset" border="0"></a>
 
